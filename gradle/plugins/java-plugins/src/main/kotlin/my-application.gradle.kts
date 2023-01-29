@@ -1,6 +1,18 @@
+import com.example.gradle.JarCount
+
 plugins {
     id("application")
     id("my-java.base")
+}
+
+tasks.register<JarCount>("countJars"){
+    group = "My Group"
+    description = "Counts!"
+
+    allJars.from(tasks.jar)
+    allJars.from(configurations.runtimeClasspath)
+
+    countFiles.set(layout.buildDirectory.file("gen/count.txt"))
 }
 
 tasks.register<Zip>("bundle") {
