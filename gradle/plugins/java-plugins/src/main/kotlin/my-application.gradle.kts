@@ -24,3 +24,16 @@ tasks.register<Zip>("bundle") {
 
     destinationDirectory.set(layout.buildDirectory.dir("distribution"))
 }
+
+tasks.build{
+    dependsOn(tasks.named("bundle"))
+}
+
+//a life-cycle task which itself doesn't do anything
+//it rather calls other tasks
+tasks.register("buildAll"){
+    description = "Builds even more!"
+
+    dependsOn(tasks.build)
+    dependsOn(tasks.named("countJars"))
+}
